@@ -1,59 +1,65 @@
 const qrData = document.getElementById('qrData')
+const test = document.getElementById('test')
 
 const frm = document.querySelector('.frm')
 
 const qrCode = document.querySelector('.qr_code')
 
-let qrSrc=""
-
-
-
-
-
+const err="Something Wrong !"
 
 //? ADDEVENTLİSTENER İLE TEKTİKLEME YAP
-frm.addEventListener('submit',(e)=>{
+frm.addEventListener('submit', (e)=>{
 
     e.preventDefault()
 
     //qrcode oluştur
-    createQR()
+    createQR(qrData.value)
 
-
-    //form reset
-    frm.reset()
+    
 
 })
 
 
-//? QR CODE OLUŞTUR
-const createQR=()=>{
 
-    fetch(`https://api.qrserver.com/v1/create-qr-code/?size150x150=&data=${qrData.value}`)
+//? QR CODE OLUŞTUR
+const createQR=(talep)=>{
+
+    fetch(`https://api.qrserver.com/v1/create-qr-code/?size150x150=&data=${talep}&rgb=255`)
     .then((response)=>{
 
-        
-        if(response.ok){
 
-            qrSrc=response.url
+        if(!response.ok){
 
-            domaYaz()
+            domaHataYaz()
         }
 
         return response
-    })
+
+    }).then((data) => domaYaz(data.url))
 
 }
 
 
 
 //? QR CODE ÇIKTISINI DOMA YAZ
-const domaYaz=()=>{
+const domaYaz=(data)=>{
 
     qrCode.innerHTML +=`
     
-    <img src="${qrSrc}" alt="">
+    <a href="${data}" download target="_blank"><img src="${data}" alt="qrcode"></a>
+    <p id="data">Data : ${qrData.value}</p>
 
     `
 
+    qrData.value = ""
+}
+
+//? QR CODE ÇIKTISINI DOMA YAZ
+const domaHataYaz=()=>{
+
+    qrCode.innerHTML +=`
+    
+    <p id="data">${err}</p>
+
+    `
 }
