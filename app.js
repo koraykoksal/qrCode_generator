@@ -5,12 +5,15 @@ const frm = document.querySelector('.frm')
 
 const qrCode = document.querySelector('.qr_code')
 
+
 const err="Something Wrong !"
 
 //? ADDEVENTLİSTENER İLE TEKTİKLEME YAP
 frm.addEventListener('submit', (e)=>{
 
     e.preventDefault()
+
+    
 
     //qrcode oluştur
     createQR(qrData.value)
@@ -20,11 +23,10 @@ frm.addEventListener('submit', (e)=>{
 })
 
 
-
 //? QR CODE OLUŞTUR
 const createQR=(talep)=>{
 
-    fetch(`https://api.qrserver.com/v1/create-qr-code/?size150x150=&data=${talep}&rgb=255`)
+    fetch(`https://api.qrserver.com/v1/create-qr-code/?size150x150=&data=${talep}`)
     .then((response)=>{
 
 
@@ -38,6 +40,7 @@ const createQR=(talep)=>{
     }).then((data) => domaYaz(data.url))
 
 }
+
 
 
 
@@ -56,6 +59,8 @@ const domaYaz=(data)=>{
 
 //? QR CODE ÇIKTISINI DOMA YAZ
 const domaHataYaz=()=>{
+
+    
 
     qrCode.innerHTML +=`
     
