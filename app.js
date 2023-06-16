@@ -47,14 +47,14 @@ const createQR=(talep)=>{
 //? QR CODE ÇIKTISINI DOMA YAZ
 const domaYaz=(data)=>{
 
-    qrCode.innerHTML +=`
-    
-    <a href="${data}" download target="_blank"><img src="${data}" alt="qrcode"></a>
-    <p id="data">Data : ${qrData.value}</p>
+    const qrLink =document.getElementById('qrLink')
+    const qrImg =document.getElementById('qrImage')
 
-    `
+    qrLink.href=data
+    qrImg.src=data
 
     qrData.value = ""
+    qrData.focus()
 }
 
 //? QR CODE ÇIKTISINI DOMA YAZ
